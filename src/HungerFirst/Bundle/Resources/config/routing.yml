@@ -1,0 +1,3 @@
+hf_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HFBundle:Default:index }

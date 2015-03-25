@@ -1,0 +1,4 @@
+services:
+#    hf.example:
+#        class: HungerFirst\HFBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,3 @@
+hf:
+    resource: "@HFBundle/Resources/config/routing.yml"
+    prefix:   /
