@@ -29,6 +29,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        JQUERY_VERSION: "1.11.2"
 
 # Assetic Configuration
 assetic:
