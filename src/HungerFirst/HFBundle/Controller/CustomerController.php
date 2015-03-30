@@ -70,4 +70,38 @@ class CustomerController extends Controller
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
+    
+    public function listAction(Request $request, $page, $id, $firstName, $lastName, $sortby) {
+        $em = $this->getDoctrine()->getManager();
+        $maxCustomersOnPage = 20;
+        
+        $offset = ($page - 1) * $maxCustomersOnPage;
+
+        $customerRepo = $em->getRepository('HFBundle:Customer'); 
+        
+        $search = array(
+            'id' => $id,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'sortby' => $sortby
+            );
+        
+        $customers = $customerRepo->findByWithLimitAndSearch($offset, $maxCustomersOnPage, $search);
+
+        $customerCount = $customerRepo->filterCount($search);   
+
+        $pages = ceil($customerCount / $maxCustomersOnPage);
+        
+        return $this->render('HFBundle:Customer:list.html.twig', 
+            array('customers' => $customers,
+                'page'  => $page,
+                'pages' => $pages,
+                'customersCount' => $customerCount,
+                'maxServersOnPage' => $maxCustomersOnPage,
+                'query' => array(
+                    'firstName' => $firstName, 
+                    'lastName'    => $lastName, 
+                    'sortby'  => $sortby)
+            ));
+    }
 }

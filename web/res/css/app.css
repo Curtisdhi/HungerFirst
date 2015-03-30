@@ -17,3 +17,19 @@ body {
     border-top: 4px solid #e7e7e7;
     margin-bottom: 0;
 }
+
+.customer-listing {
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid #cccccc;
+}
+.customer-listing:last-child {
+    border-bottom: none;
+}
+
+.customer-listing img {
+    width: 50px;
+}
+.customer-listing img:hover {
+    width: 200px;
+}

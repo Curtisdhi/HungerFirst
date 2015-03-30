@@ -3,6 +3,7 @@
 namespace HungerFirst\HFBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CustomerRepository
@@ -12,5 +13,62 @@ use Doctrine\ORM\EntityRepository;
  */
 class CustomerRepository extends EntityRepository
 {
+    public function getQueryForSearchParameters(QueryBuilder $query, $search) {
+  
+        if (!empty($search['id']) && $search['id'] !== "none") {
+            $query->andWhere('c.id LIKE :id')
+                    ->setParameter('id', '%'.$search['id'].'%');
+        }
+        if (!empty($search['firstName']) && $search['firstName'] !== "none") {
+            $query->andWhere('c.firstName LIKE :firstName')
+                    ->setParameter('firstName', '%'.$search['firstName'].'%');
+        }
+        if (!empty($search['lastName']) && $search['lastName'] !== "none") {
+            $query->andWhere('c.lastName LIKE :lastName')
+                    ->setParameter('lastName', '%'.$search['lastName'],'%');
+        }
+  
+        if (!empty($search['sortby'])) {
+            switch ($search['sortby']) {
+                case "id":
+                    $query->addOrderBy('c.id', 'DESC');
+                    break;
+                case "firstName":
+                    $query->addOrderBy('c.firstName', 'DESC');
+                    break;
+                case 'lastName':
+                    $query->addOrderBy('c.lastName', 'DESC');
+                    break;
+            }
+        }
+        
+        return  $query;
+        
+    }
     
+    public function findByWithLimitAndSearch($offset, $max, $search = array()) {
+        
+        $query = $this->createQueryBuilder('c')
+            ->setFirstResult($offset)
+            ->setMaxResults($max);
+        if (!empty($search)) { 
+            $query = $this->getQueryForSearchParameters($query, $search);
+        }
+        return $query->getQuery()->getResult();
+    }
+    
+    public function filterCount($search = array()) {
+        $query = $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)');
+        
+        $query = $this->getQueryForSearchParameters($query, $search);    
+        
+        return $query->getQuery()->getSingleScalarResult();
+    }
+    
+    public function countAll() {
+        $query = $this->createQueryBuilder('c')->select('COUNT(c.id)');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }

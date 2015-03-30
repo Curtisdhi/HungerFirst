@@ -1,0 +1,86 @@
+{% extends 'HFBundle::base.html.twig' %}
+
+{% block title %}Customer List - Hungry First Internal{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+    {% endfor %}
+    <header>
+        <div>
+            
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="glyphicon glyphicon-picture"></span>
+                        Photo
+                    </div>
+                    <div class="col-md-2">
+                        <span class="glyphicon">#</span>
+                        ID
+                    </div>
+                    <div class="col-md-2">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Name
+                    </div>
+                    <div class="col-md-2">
+                        <span class="glyphicon glyphicon-road"></span>
+                        Address
+                    </div>
+                    <div class="col-md-2">
+                        <span class="glyphicon glyphicon-phone-alt"></span>
+                        Phone Number
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                {# render search bar! #}
+                {#{ render(controller('HFBundle:Customer:searchBar')) }#} 
+                {% for customer in customers %}
+                    {% include 'HFBundle:Snippets:customerListing.html.twig' %}
+                {% else %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning">
+                                Sorry, there are no customers to be displayed.
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% if pages > 1 %}
+            <div class="panel-footer">
+                <ul class="pagination">
+
+                    {% for i in 1..pages %}
+                        {% if i == 1 and i == page %}
+                            <li class="disabled"><a>&laquo;</a></li>
+                        {% elseif i == 1 %}
+                            <li><a href="{{ path('hf_customer_list', query|merge({'page': (page-1)})) }}">&laquo;</a></li>
+                        {% endif %}
+
+                        {% if i == page %}
+                            <li class="active"><a>{{ i }} <span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="{{ path('hf_customer_list', query|merge({'page': i})) }}">{{ i }}</a></li>
+                        {% endif %}
+
+                        {% if i == page and page == pages %}
+                            <li class="disabled"><a>&raquo;</a></li>
+                        {% elseif i == pages %}
+                            <li><a href="{{ path('hf_customer_list', query|merge({'page': (page+1)})) }}">&raquo;</a></li>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        </div>
+    </div>  
+{% endblock %}

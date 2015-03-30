@@ -2,6 +2,13 @@ hf_homepage:
     path:     /
     defaults: { _controller: HFBundle:Default:index }
 
+hf_customer_list:
+    pattern: /customers/{page}/{id}/{firstName}/{lastName}/{sortby}
+    defaults: { _controller: HFBundle:Customer:list, page: 1, id: 0, firstName: "none", lastName: "none", sortby: "none" }
+    requirements:
+        _method:  GET
+        id:  \d+   
+
 hf_customer_create:
     pattern: /customer/create
     defaults: { _controller: HFBundle:Customer:create }
