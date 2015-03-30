@@ -5,3 +5,10 @@ hf_homepage:
 hf_customer_create:
     pattern: /customer/create
     defaults: { _controller: HFBundle:Customer:create }
+    
+hf_customer_edit:
+    pattern: /customer/edit/{id}
+    defaults: { _controller: HFBundle:Customer:edit, id: 0 }
+    requirements:
+        _method:  GET
+        id:  \d+   
