@@ -1,6 +1,6 @@
 <?php
 
-namespace HungerFirst\HFBundle\Entity;
+namespace HungerFirst\HFBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -12,4 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class CustomerRepository extends EntityRepository
 {
+    
 }

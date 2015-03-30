@@ -1,0 +1,11 @@
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <ul class="list-group">
+            {% for error in errors %}
+            <li class="list-group-item"><div class="alert alert-danger">{{ error.message|raw }}</div></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

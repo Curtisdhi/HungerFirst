@@ -1,0 +1,68 @@
+{% extends 'HFBundle::base.html.twig' %}
+
+{% block title %}Customer Registration - Hungry First{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+    {% endfor %}
+    <header>
+        
+    </header>
+    <div class="container-fluid">
+        <div class="panel panel-primary register_form">
+            <div class="panel-heading">Customer Registration</div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                    {{ form_errors(form) }} 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ form_row(form.id) }}
+                        {{ form_row(form.address) }}
+                        {{ form_row(form.phoneNumber) }}
+                        
+                        {{ form_row(form.description) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.firstName) }}
+                        {{ form_row(form.lastName) }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(form.householdSize) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.childrenInHousehold) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(form.homeless) }}
+                                {{ form_row(form.foodStamps) }}
+                                {{ form_row(form.socialSecurity) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.familyFirst) }}
+                                {{ form_row(form.enegryProgram) }}
+                                {{ form_row(form.publicHousing) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary'} }) }}
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{# empty Twig template #}

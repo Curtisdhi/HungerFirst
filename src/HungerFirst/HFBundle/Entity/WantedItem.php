@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="HungerFirst\HFBundle\Entity\Repository\WantedItemRepository")
  */
-class WantedItems
+class WantedItem
 {
     /**
      * @var integer

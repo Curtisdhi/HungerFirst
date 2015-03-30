@@ -1,3 +1,7 @@
 hf_homepage:
     path:     /
     defaults: { _controller: HFBundle:Default:index }
+
+hf_customer_create:
+    pattern: /customer/create
+    defaults: { _controller: HFBundle:Customer:create }

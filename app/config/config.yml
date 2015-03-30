@@ -31,6 +31,10 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         JQUERY_VERSION: "1.11.2"
+    form:
+        resources: 
+            - 'HFBundle:Form:fields.html.twig'
+            - 'HFBundle:Form:formErrors.html.twig'
 
 # Assetic Configuration
 assetic:
