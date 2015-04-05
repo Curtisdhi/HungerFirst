@@ -6,31 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerSearchType extends AbstractType {
-    private $sortByOptions;
-    
-    public function __construct($versions = null, $sortByOptions = array()) {
-        $this->versions = $versions;
-        if (empty($sortByOptions)) {
-            $sortByOptions = array(
-                'id' => 'id',
-                'firstName' => 'firstName',
-                'lastName' => 'lastName',
-                'phoneNumber' => 'phoneNumber');
-        }
-        $this->sortByOptions = $sortByOptions;
-    }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'integer', array(
+            'label' => 'ID Number:',
             'required' => false,
             'attr' => array(
                 'placeholder' => 'ID Number',
+                'min' => 0,
             ),
             'empty_data' => 0,
         ));  
         
         $builder->add('firstName', 'text', array(
+            'label' => 'First Name:',
             'required' => false,
             'attr' => array(
                 'placeholder' => 'First Name',
@@ -39,6 +29,7 @@ class CustomerSearchType extends AbstractType {
         ));  
         
         $builder->add('lastName', 'text', array(
+            'label' => 'Last Name:',
             'required' => false,
             'attr' => array(
                 'placeholder' => 'Last Name',
@@ -47,6 +38,7 @@ class CustomerSearchType extends AbstractType {
         ));  
         
         $builder->add('address', 'text', array(
+            'label' => 'Address:',
             'required' => false,
             'attr' => array(
                 'placeholder' => 'Address',
@@ -55,6 +47,7 @@ class CustomerSearchType extends AbstractType {
         ));  
         
         $builder->add('phoneNumber', 'text', array(
+            'label' => 'Phone Number:',
             'required' => false,
             'attr' => array(
                 'placeholder' => 'Phone Number',
@@ -62,15 +55,6 @@ class CustomerSearchType extends AbstractType {
             'empty_data' => 'none',
         ));  
         
-        $builder->add('sortBy', 'choice', array(
-            'required' => false,
-            'attr' => array(
-                 'class' => 'form-control'
-            ),
-            'empty_value' => 'Sort By',
-            'empty_data' => 'default',
-            'choices' => $this->sortByOptions
-        ));
     }
     
     public function getName()

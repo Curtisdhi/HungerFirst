@@ -12,6 +12,7 @@
         </div>
     </header>
     <div class="container-fluid">
-        
+        {# render customer list #}
+        {{ render(controller('HFBundle:Customer:list', {'query': query})) }} 
     </div>
 {% endblock %}

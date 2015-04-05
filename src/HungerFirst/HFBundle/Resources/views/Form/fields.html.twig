@@ -41,9 +41,9 @@
 
 {% block integer_widget %}
     
-    {% set type = type|default('integer') %}
+    {% set type = type|default('number') %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
-  
+
     {{ block('form_widget_simple') }}
     
 {% endblock integer_widget %}

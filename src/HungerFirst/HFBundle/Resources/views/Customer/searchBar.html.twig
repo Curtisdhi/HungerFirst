@@ -1,0 +1,49 @@
+{% block style %}
+    <style>
+        .search-field {
+            margin-bottom: 3px;
+            width: 100%;
+        }
+        
+    </style>
+{% endblock %}    
+
+{% block searchForm %}
+{{ form_start(form, {'action': path('hf_search_bar')}) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Customer Search Form
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    {{ form_row(form.id, {'attr': {'class': 'search-field' } }) }}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    {{ form_row(form.firstName, {'attr': {'class': 'search-field' } }) }}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    {{ form_row(form.lastName, {'attr': {'class': 'search-field' } }) }}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    {{ form_row(form.address, {'attr': {'class': 'search-field' } }) }}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    {{ form_row(form.phoneNumber, {'attr': {'class': 'search-field' } }) }}
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-6">
+
+                </div>
+            </div>
+            {{ form_rest(form) }}
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-bg btn-default" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}
+{% endblock %}

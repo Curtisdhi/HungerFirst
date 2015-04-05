@@ -1,10 +1,14 @@
 hf_homepage:
-    path:     /
-    defaults: { _controller: HFBundle:Default:index }
-
-hf_customer_list:
-    pattern: /customers/{page}/{id}/{firstName}/{lastName}/{sortby}
-    defaults: { _controller: HFBundle:Customer:list, page: 1, id: 0, firstName: "none", lastName: "none", sortby: "none" }
+    path:     /{page}/{id}/{firstName}/{lastName}/{address}/{phoneNumber}/{sortby}
+    defaults: 
+        _controller: HFBundle:Default:index
+        page: 1
+        id: 0
+        firstName: "none"
+        lastName: "none"
+        address: "none"
+        phoneNumber: "none"
+        sortby: "none"
     requirements:
         _method:  GET
         id:  \d+   
@@ -19,3 +23,8 @@ hf_customer_edit:
     requirements:
         _method:  GET
         id:  \d+   
+        
+hf_search_bar: 
+    pattern: /search_bar
+    defaults: { _controller: HFBundle:Customer:searchBar }       
+        

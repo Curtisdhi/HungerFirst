@@ -34,47 +34,47 @@ class CustomerSearchModel {
      */
     private $phoneNumber;
     
-    function getId() {
+    public function getId() {
         return $this->id;
     }
 
-    function getFirstName() {
+    public function getFirstName() {
         return $this->firstName;
     }
 
-    function getLastName() {
+    public function getLastName() {
         return $this->lastName;
     }
 
-    function getAddress() {
+    public function getAddress() {
         return $this->address;
     }
 
-    function getPhoneNumber() {
+    public function getPhoneNumber() {
         return $this->phoneNumber;
     }
 
-    function setId($id) {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
 
-    function setFirstName($firstName) {
+    public function setFirstName($firstName) {
         $this->firstName = $firstName;
         return $this;
     }
 
-    function setLastName($lastName) {
+    public function setLastName($lastName) {
         $this->lastName = $lastName;
         return $this;
     }
 
-    function setAddress($address) {
+    public function setAddress($address) {
         $this->address = $address;
         return $this;
     }
 
-    function setPhoneNumber($phoneNumber) {
+    public function setPhoneNumber($phoneNumber) {
         $this->phoneNumber = $phoneNumber;
         return $this;
     }

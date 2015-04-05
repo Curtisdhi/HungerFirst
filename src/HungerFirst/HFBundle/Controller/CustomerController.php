@@ -5,6 +5,8 @@ namespace HungerFirst\HFBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use HungerFirst\HFBundle\Form\Type\CustomerType;
+use HungerFirst\HFBundle\Form\Type\CustomerSearchType;
+use HungerFirst\HFBundle\Form\Model\CustomerSearchModel;
 use HungerFirst\HFBundle\Entity\Customer;
 
 class CustomerController extends Controller
@@ -71,54 +73,44 @@ class CustomerController extends Controller
         }
     }
     
-    public function listAction(Request $request, $page, $id, $firstName, $lastName, $sortby) {
+    public function listAction(Request $request, $query) {
         $em = $this->getDoctrine()->getManager();
         $maxCustomersOnPage = 20;
         
-        $offset = ($page - 1) * $maxCustomersOnPage;
+        $offset = ($query['page'] - 1) * $maxCustomersOnPage;
 
         $customerRepo = $em->getRepository('HFBundle:Customer'); 
         
-        $search = array(
-            'id' => $id,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'sortby' => $sortby
-            );
         
-        $customers = $customerRepo->findByWithLimitAndSearch($offset, $maxCustomersOnPage, $search);
+        $customers = $customerRepo->findByWithLimitAndSearch($offset, $maxCustomersOnPage, $query);
 
-        $customerCount = $customerRepo->filterCount($search);   
+        $customerCount = $customerRepo->filterCount($query);   
 
         $pages = ceil($customerCount / $maxCustomersOnPage);
         
         return $this->render('HFBundle:Customer:list.html.twig', 
             array('customers' => $customers,
-                'page'  => $page,
+                'page'  => $query['page'],
                 'pages' => $pages,
                 'customersCount' => $customerCount,
                 'maxCustomersOnPage' => $maxCustomersOnPage,
-                'query' => array(
-                    'firstName' => $firstName, 
-                    'lastName'    => $lastName, 
-                    'sortby'  => $sortby)
+                'query' => $query,
             ));
     }
     
     public function searchBarAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $serverRepo = $em->getRepository('ProjectGxpBundle:Server');    
-        
         $form = $this->createForm(new CustomerSearchType(), new CustomerSearchModel()) ;
         $form->handleRequest($request);
       
         if ($form->isSubmitted()) {
             $search = $form->getData();
             //var_dump($search);
-            return $this->redirectToRoute('hf_customer_list', array(
-                'tags' => implode(',', $search->getTags()),
-                'name' => $search->getName(),
-                'sortby' => $search->getSortBy()
+            return $this->redirectToRoute('hf_homepage', array(
+                'id' => $search->getId(),
+                'firstName' => $search->getFirstName(),
+                'lastName' => $search->getLastName(),
+                'address' => $search->getAddress(),
+                'phoneNumber' => $search->getPhoneNumber(),
             ));
         }
 
