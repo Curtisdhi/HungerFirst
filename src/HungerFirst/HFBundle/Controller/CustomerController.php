@@ -97,11 +97,35 @@ class CustomerController extends Controller
                 'page'  => $page,
                 'pages' => $pages,
                 'customersCount' => $customerCount,
-                'maxServersOnPage' => $maxCustomersOnPage,
+                'maxCustomersOnPage' => $maxCustomersOnPage,
                 'query' => array(
                     'firstName' => $firstName, 
                     'lastName'    => $lastName, 
                     'sortby'  => $sortby)
             ));
     }
+    
+    public function searchBarAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $serverRepo = $em->getRepository('ProjectGxpBundle:Server');    
+        
+        $form = $this->createForm(new CustomerSearchType(), new CustomerSearchModel()) ;
+        $form->handleRequest($request);
+      
+        if ($form->isSubmitted()) {
+            $search = $form->getData();
+            //var_dump($search);
+            return $this->redirectToRoute('hf_customer_list', array(
+                'tags' => implode(',', $search->getTags()),
+                'name' => $search->getName(),
+                'sortby' => $search->getSortBy()
+            ));
+        }
+
+        return $this->render('HFBundle:Customer:searchBar.html.twig', 
+                array(
+                    'form' => $form->createView())
+                );
+    }
+    
 }
