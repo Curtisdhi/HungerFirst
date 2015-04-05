@@ -1,44 +1,57 @@
 
 {# render search bar! #}
-{{ render(controller('HFBundle:Customer:searchBar')) }} 
+{{ render(controller('HFBundle:Customer:searchBar',{'query': query} )) }} 
         
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <div class="row">
-            <div class="col-md-2">
+        Customers
+        <span class="pull-right">
+            <a href="{{ path('hf_customer_create') }}" class="btn btn-success">Add</a>
+        </span>
+    </div>
+    <table class="table table-hover table-striped customer-listing">
+        <tr>
+            <th>
                 <span class="glyphicon glyphicon-picture"></span>
                 Photo
-            </div>
-            <div class="col-md-2">
+            </th>
+            <th>
                 <span class="glyphicon">#</span>
                 ID
-            </div>
-            <div class="col-md-2">
+            </th>
+            <th>
                 <span class="glyphicon glyphicon-user"></span>
                 First & Last Name
-            </div>
-            <div class="col-md-2">
+            </th>
+            <th>
                 <span class="glyphicon glyphicon-road"></span>
                 Address
-            </div>
-            <div class="col-md-2">
+            </th>
+            <th>
                 <span class="glyphicon glyphicon-phone-alt"></span>
                 Phone Number
-            </div>
-        </div>
-    </div>
-    <div class="panel-body">
+            </th>
+        </tr>
         {% for customer in customers %}
-            {% include 'HFBundle:Snippets:customerListing.html.twig' %}
+            <tr {% if (query.id == customer.id) %} class="success" {% endif %}>
+                <td>
+                    <img class="img-responsive img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                </td>
+                <td>{{customer.id}}</td>
+                <td>{{customer.firstName}} {{ customer.lastName }}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.phoneNumber}}</td>
+            </tr>
         {% else %}
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+            <tr>
+                <td colspan="5">
                     <div class="alert alert-warning">
                         Sorry, there are no customers to be displayed.
                     </div>
-                </div>
-            </div>
+                </td>
+            </tr>
         {% endfor %}
+        </table>
     </div>
 
 {% if pages > 1 %}

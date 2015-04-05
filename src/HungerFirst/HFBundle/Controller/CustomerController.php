@@ -98,8 +98,8 @@ class CustomerController extends Controller
             ));
     }
     
-    public function searchBarAction(Request $request) {
-        $form = $this->createForm(new CustomerSearchType(), new CustomerSearchModel()) ;
+    public function searchBarAction(Request $request, $query = array()) {
+        $form = $this->createForm(new CustomerSearchType(), new CustomerSearchModel($query)) ;
         $form->handleRequest($request);
       
         if ($form->isSubmitted()) {

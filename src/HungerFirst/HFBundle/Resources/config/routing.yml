@@ -1,5 +1,11 @@
+hf_index:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: hf_homepage
+        permanent: true
 hf_homepage:
-    path:     /{page}/{id}/{firstName}/{lastName}/{address}/{phoneNumber}/{sortby}
+    path:     /home/{page}/{id}/{firstName}/{lastName}/{address}/{phoneNumber}/{sortby}
     defaults: 
         _controller: HFBundle:Default:index
         page: 1

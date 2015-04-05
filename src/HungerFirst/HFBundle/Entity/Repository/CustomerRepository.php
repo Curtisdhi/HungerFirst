@@ -25,15 +25,15 @@ class CustomerRepository extends EntityRepository
         }
         if (!empty($search['lastName']) && $search['lastName'] !== "none") {
             $query->andWhere('c.lastName LIKE :lastName')
-                    ->setParameter('lastName', '%'.$search['lastName'],'%');
+                    ->setParameter('lastName', '%'.$search['lastName'].'%');
         }
         if (!empty($search['address']) && $search['address'] !== "none") {
             $query->andWhere('c.address LIKE :address')
-                    ->setParameter('address', '%'.$search['address'],'%');
+                    ->setParameter('address', '%'.$search['address'].'%');
         }
         if (!empty($search['phoneNumber']) && $search['phoneNumber'] !== "none") {
             $query->andWhere('c.phoneNumber LIKE :phoneNumber')
-                    ->setParameter('phoneNumber', '%'.$search['phoneNumber'],'%');
+                    ->setParameter('phoneNumber', '%'.$search['phoneNumber'].'%');
         }        
   
         if (!empty($search['sortby'])) {

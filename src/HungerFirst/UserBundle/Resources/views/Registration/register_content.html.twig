@@ -1,0 +1,26 @@
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">User Registration</div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    {{ form_row(form.username, {'label': 'Username:', 'attr': { 'placeholder': 'Username' } }) }}
+                    {{ form_row(form.email, {'label': 'Email:', 'attr': { 'placeholder': 'Email' } }) }}
+
+                    {# render both password fields with correct labels #}
+                    {% set passFields = 0 %}
+                    {% for passwordField in form.plainPassword %}
+                        {% set label = (passFields == 0) ? "Password" : "Confirm Password" %}
+                        {{ form_row(passwordField, {'label': label ~ ':', 'attr': { 'placeholder': label } }) }}
+                        {% set passFields = passFields + 1 %}
+                    {% endfor %}
+
+                    {{ form_rest(form) }}
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+                {{ form_end(form) }}
+            </div> <!-- /.panel.body -->
+        </div> <!-- /.panel -->
+    </div> <!-- /.col-md-4 -->
+</div> <!-- /.panel.row -->

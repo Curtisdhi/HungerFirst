@@ -34,6 +34,39 @@ class CustomerSearchModel {
      */
     private $phoneNumber;
     
+    public function __construct(array $query) {
+        $defaults = array(
+            'id' => null,
+            'firstName' => null,
+            'lastName' => null,
+            'address' => null,
+            'phoneNumber' => null,
+        );
+        $this->cleanQuery($query);
+        $query = array_merge($defaults, $query);
+        
+        $this->id = $query['id'];
+        $this->firstName = $query['firstName'];
+        $this->lastName = $query['lastName'];
+        $this->address = $query['address'];
+        $this->phoneNumber = $query['phoneNumber'];
+    }
+    
+    /**
+     * Remove any elements with the contents "none" or "0"
+     * @param array $query
+     */
+    private function cleanQuery(array &$query) {
+        $keys = array_keys($query);
+        $count = count($keys);
+        for ($i=0; $i < $count; $i++) {
+            $value = $query[$keys[$i]];
+            if ($value === 'none' || $value === '0' || $value === 0) {
+                unset($query[$keys[$i]]);
+            }
+        }
+    }
+
     public function getId() {
         return $this->id;
     }

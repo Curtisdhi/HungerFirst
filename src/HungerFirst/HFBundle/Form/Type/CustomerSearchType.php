@@ -16,7 +16,7 @@ class CustomerSearchType extends AbstractType {
                 'placeholder' => 'ID Number',
                 'min' => 0,
             ),
-            'empty_data' => 0,
+            'empty_data' => '0',
         ));  
         
         $builder->add('firstName', 'text', array(
