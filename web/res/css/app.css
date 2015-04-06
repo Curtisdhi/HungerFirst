@@ -25,3 +25,38 @@ body {
 .customer-listing img:hover {
     width: 200px;
 }
+
+.panel-heading .pagination-panel, 
+.panel-footer .pagination-panel {
+    margin: -11px -16px; /* Based off default .panel-heading padding */
+    
+    > li {
+        > a,
+        > span {
+            padding: 10px 18px; /* Based off default .panel-heading padding */
+        }
+    }
+    
+}
+ 
+.panel-heading .pagination-panel {
+    > li {
+        &:last-child {
+            > a,
+            > span {
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+}
+ 
+.panel-footer .pagination-panel {
+    > li {
+        &:last-child {
+            > a,
+            > span {
+                border-top-right-radius: 0;
+            }
+        }
+    }
+}

@@ -4,10 +4,11 @@
         
 <div class="panel panel-primary">
     <div class="panel-heading">
+        Customers
         <span class="pull-right">
             <a href="{{ path('hf_customer_create') }}" class="btn btn-success">Add</a>
         </span>
-        Customers
+        <div class="clearfix"></div>
     </div>
     <table class="table table-hover table-striped customer-listing">
         <tr>
@@ -31,33 +32,40 @@
                 <span class="glyphicon glyphicon-phone-alt"></span>
                 Phone Number
             </th>
+            <th>
+                <span class="glyphicon glyphicon-wrench"></span>
+                Actions
+            </th>
         </tr>
+        {% set alreadyExist = false %}
         {% for customer in customers %}
             {% spaceless %}
                 <tr
                 {% if (query.id == customer.id) or
-                        (query.firstName|lower == customer.firstName|lower) or 
-                        (query.lastName|lower == customer.lastName|lower) or
+                        ((query.firstName|lower == customer.firstName|lower) and
+                            (query.lastName|lower == customer.lastName|lower)) or
                         (query.address|lower == customer.address|lower) or
-                        (query.phoneNumber == customer.phoneNumber)
+                        (query.phoneNumber|replace({'-':''}) == customer.phoneNumber|replace({'-':''}))
                 %}
-                    class="success"
-                {% elseif (query.id in customer.id) or
-                        (query.firstName|lower in customer.firstName|lower) or 
-                        (query.lastName|lower in customer.lastName|lower) or
-                        (query.address|lower in customer.address|lower) or
-                        (query.phoneNumber in customer.phoneNumber)
-                %}
-                    class="warning"
+                    {% if alreadyExist %}
+                        class="danger"
+                    {% else %}
+                        class="success"
+                        {% set alreadyExist = true %}
+                    {% endif %}
                 {% endif %}
             {% endspaceless%}>
                 <td>
-                    <img class="img-responsive img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                    <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
                 </td>
-                <td>{{customer.id}}</td>
-                <td>{{customer.firstName}} {{ customer.lastName }}</td>
-                <td>{{customer.address}}</td>
-                <td>{{customer.phoneNumber}}</td>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.phoneNumber|phone }}</td>
+                <td>
+                    <a class="btn btn-sm btn-default">View</a>
+                    <a class="btn btn-sm btn-default">Edit</a>
+                </td>
             </tr>
         {% else %}
             <tr>
@@ -68,34 +76,36 @@
                 </td>
             </tr>
         {% endfor %}
-        </table>
-    </div>
+    </table>
 
-{% if pages > 1 %}
-    <div class="panel-footer">
-        <ul class="pagination">
+    {% if pages > 1 %}
+        <div class="panel-footer">
+            <div class="text-center">
+                <ul class="pagination pagination-panel">
 
-            {% for i in 1..pages %}
-                {% if i == 1 and i == page %}
-                    <li class="disabled"><a>&laquo;</a></li>
-                {% elseif i == 1 %}
-                    <li><a href="{{ path('hf_customer_list', query|merge({'page': (page-1)})) }}">&laquo;</a></li>
-                {% endif %}
+                    {% for i in 1..pages %}
+                        {% if i == 1 and i == page %}
+                            <li class="disabled"><a>&laquo;</a></li>
+                        {% elseif i == 1 %}
+                            <li><a href="{{ path('hf_homepage', query|merge({'page': (page-1)})) }}">&laquo;</a></li>
+                        {% endif %}
 
-                {% if i == page %}
-                    <li class="active"><a>{{ i }} <span class="sr-only">(current)</span></a></li>
-                {% else %}
-                    <li><a href="{{ path('hf_customer_list', query|merge({'page': i})) }}">{{ i }}</a></li>
-                {% endif %}
+                        {% if i == page %}
+                            <li class="active"><a>{{ i }} <span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="{{ path('hf_homepage', query|merge({'page': i})) }}">{{ i }}</a></li>
+                        {% endif %}
 
-                {% if i == page and page == pages %}
-                    <li class="disabled"><a>&raquo;</a></li>
-                {% elseif i == pages %}
-                    <li><a href="{{ path('hf_customer_list', query|merge({'page': (page+1)})) }}">&raquo;</a></li>
-                {% endif %}
+                        {% if i == page and page == pages %}
+                            <li class="disabled"><a>&raquo;</a></li>
+                        {% elseif i == pages %}
+                            <li><a href="{{ path('hf_homepage', query|merge({'page': (page+1)})) }}">&raquo;</a></li>
+                        {% endif %}
 
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div>
 

@@ -44,14 +44,14 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=100)
+     * @ORM\Column(name="address", type="string", length=100, nullable=true)
      */
     private $address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phoneNumber", type="string", length=10)
+     * @ORM\Column(name="phoneNumber", type="string", length=10, nullable=true)
      */
     private $phoneNumber;
 

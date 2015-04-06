@@ -2,3 +2,8 @@ services:
 #    hf.example:
 #        class: HungerFirst\HFBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    app.twig_extension:
+        class: HungerFirst\HFBundle\Twig\HFExtension
+        public: false
+        tags:
+            - { name: twig.extension }
