@@ -1,11 +1,12 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin-top: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
 #footer {

@@ -4,10 +4,10 @@
         
 <div class="panel panel-primary">
     <div class="panel-heading">
-        Customers
         <span class="pull-right">
             <a href="{{ path('hf_customer_create') }}" class="btn btn-success">Add</a>
         </span>
+        Customers
     </div>
     <table class="table table-hover table-striped customer-listing">
         <tr>
@@ -33,7 +33,24 @@
             </th>
         </tr>
         {% for customer in customers %}
-            <tr {% if (query.id == customer.id) %} class="success" {% endif %}>
+            {% spaceless %}
+                <tr
+                {% if (query.id == customer.id) or
+                        (query.firstName|lower == customer.firstName|lower) or 
+                        (query.lastName|lower == customer.lastName|lower) or
+                        (query.address|lower == customer.address|lower) or
+                        (query.phoneNumber == customer.phoneNumber)
+                %}
+                    class="success"
+                {% elseif (query.id in customer.id) or
+                        (query.firstName|lower in customer.firstName|lower) or 
+                        (query.lastName|lower in customer.lastName|lower) or
+                        (query.address|lower in customer.address|lower) or
+                        (query.phoneNumber in customer.phoneNumber)
+                %}
+                    class="warning"
+                {% endif %}
+            {% endspaceless%}>
                 <td>
                     <img class="img-responsive img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
                 </td>
