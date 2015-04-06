@@ -1,17 +1,17 @@
-{% extends 'HFBundle::base.html.twig' %}
+{% extends 'HFBundle::layout.html.twig' %}
 
 {% block title %}Hungry First Internal{% endblock %}
 
-{% block body %}
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">{{ flashMessage }}</div>
-    {% endfor %}
+{% block content %}
     <header>
         <div>
             <img class="img-responsive" style="max-width: 300px;margin: 0 auto;" src="{{ asset('res/images/logo.png') }}"/>
         </div>
     </header>
     <div class="container-fluid">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         {# render customer list #}
         {{ render(controller('HFBundle:Customer:list', {'query': query})) }} 
     </div>

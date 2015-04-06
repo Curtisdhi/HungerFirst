@@ -63,8 +63,8 @@
                 <td>{{ customer.address }}</td>
                 <td>{{ customer.phoneNumber|phone }}</td>
                 <td>
-                    <a class="btn btn-sm btn-default">View</a>
-                    <a class="btn btn-sm btn-default">Edit</a>
+                    <a href="{{ path('hf_customer',{'id': customer.id}) }}" class="btn btn-sm btn-default">View</a>
+                    <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-sm btn-default">Edit</a>
                 </td>
             </tr>
         {% else %}

@@ -5,7 +5,7 @@ hf_index:
         route: hf_homepage
         permanent: true
 hf_homepage:
-    path:     /home/{page}/{id}/{firstName}/{lastName}/{address}/{phoneNumber}/{sortby}
+    path:     /index/{page}/{id}/{firstName}/{lastName}/{address}/{phoneNumber}/{sortby}
     defaults: 
         _controller: HFBundle:Default:index
         page: 1
@@ -19,6 +19,13 @@ hf_homepage:
         _method:  GET
         id:  \d+   
 
+hf_customer:
+    pattern: /customer/{id}
+    defaults: { _controller: HFBundle:Customer:view, id: 0 }
+    requirements:
+        _method:  GET
+        id:  \d+   
+        
 hf_customer_create:
     pattern: /customer/create
     defaults: { _controller: HFBundle:Customer:create }

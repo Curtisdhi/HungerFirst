@@ -150,7 +150,7 @@ class CustomerType extends AbstractType
                 //(555)555-5555
                 $str = "";
                 if (isset($m[0])) $str = "($m[1])$m[2]-$m[3]";
-                if (isset($m[4])) $str = "($m[4])$m[5]-";
+                if (isset($m[4])) $str = "($m[4])$m[5]";
                 if (isset($m[6])) $str = "($m[6])";
                 return $str;
             };
