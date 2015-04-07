@@ -42,7 +42,7 @@ class CustomerController extends Controller
 
            $this->get('session')->getFlashBag()->set('success', 'Successfully created new customer.');
 
-           return $this->redirectToRoute('hf_homepage');
+           return $this->redirectToRoute('hf_customer', array('id' => $customer->getId()));
         }
 
         return $this->render('HFBundle:Customer:create.html.twig', array('form' => $form->createView()));
@@ -68,7 +68,7 @@ class CustomerController extends Controller
 
            $this->get('session')->getFlashBag()->set('success', 'Successfully edited customer');
 
-           return $this->redirectToRoute('hf_homepage');
+           return $this->redirectToRoute('hf_customer', array('id' => $customer->getId()));
         }
 
         return $this->render('HFBundle:Customer:create.html.twig', array('form' => $form->createView()));

@@ -25,17 +25,21 @@
     <body>
         {% block body %}
         {% endblock %}
-        <footer id="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-2">
-                        <p class="text-muted">Hunger First &copy; 2015</p>
-                        <p class="text-muted">Developed by Curtis Hicks</p>
+        {% block footer %}
+            <footer id="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="text-muted">Hunger First &copy; 2015</p>
+                            <p class="text-muted">Developed by Curtis Hicks</p>
+                        </div>
+                        <div class="col-md-2 col-md-offset-8">
+                            <p class="text-muted">Powered by <a href="http://www.symfony.com" target="_blank">Symfony2</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
-
+            </footer>
+        {% endblock %}
         {% block scripts %}
             <script src="//ajax.googleapis.com/ajax/libs/jquery/{{JQUERY_VERSION}}/jquery.min.js"></script>
             <script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>

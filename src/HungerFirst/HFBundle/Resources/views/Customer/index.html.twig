@@ -3,16 +3,137 @@
 {% block title %}Hungry First Internal{% endblock %}
 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">{{ flashMessage }}</div>
-    {% endfor %}
     <header>
         <div>
-            <img class="img-responsive" style="max-width: 300px;margin: 0 auto;" src="{{ asset('res/images/logo.png') }}"/>
+            <img class="img-responsive" style="max-width: 300px;margin: 0 auto;" src="{{ asset('res/images/logo.png') }}">
         </div>
     </header>
     <div class="container-fluid">
-       {{ customer.id }}
-       {{ customer.firstName }}{{ customer.lastName }} 
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{ customer.firstName }} {{ customer.lastName }}
+                <div class="pull-right">
+                    <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-default">Edit</a>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">{{ flashMessage }}</div>
+                {% endfor %}
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-responsive img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                    </div>
+                    <div class="col-md-6">
+                        <!-- customer info panel -->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Info</div>
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>ID:</th>
+                                        <td>{{ customer.id }}</td>
+                                        <th>Full Name:</th>
+                                        <td>{{ (customer.firstName ~' '~ customer.lastName)|title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address:</th>
+                                        <td>{{ customer.address }}</td>
+                                        <th>Phone Number</th>
+                                        <td>{{ customer.phoneNumber|phone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Household Size:</th>
+                                        <td>{{ customer.householdSize }}</td>
+                                        <th>Children in Household:</th>
+                                        <td>{{ customer.childrenInHousehold }}</td>
+                                    </tr>
+                                </table>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Homeless</th>
+                                        <th>FoodStamps</th>
+                                        <th>Social Security</th>
+                                        <th>Family First</th>
+                                        <th>Enegry Program</th>
+                                        <th>Public Housing</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{%- if customer.homeless -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                        <td>{%- if customer.foodstamps -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                        <td>{%- if customer.socialSecurity -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                        <td>{%- if customer.familyFirst -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                        <td>{%- if customer.enegryProgram -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                        <td>{%- if customer.publicHousing -%}
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            {% else %}
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            {%- endif -%}</td>
+                                    </tr>
+                                </table>
+                                {% if customer.description|length > 0 %}
+                                    <h5>Notes:</h5>
+                                    <p class="well well-sm">{{ customer.description }}</p>
+                                {% endif %}
+           
+                            </div>
+                        </div> <!-- ./customer info panel -->
+                    </div>
+                                
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Checkouts</div>
+                            <div class="panel-body">
+                                {% if (customer.checkouts|length > 0) %}
+                                 <table class="table table-hover table-striped customer-listing">
+                                    <tr>
+                                        <th>
+                                            <span class="glyphicon glyphicon-picture"></span>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Item
+                                        </th>
+                                    </tr>
+                                    {% for checkout in customer.checkouts %}
+                                        <tr>
+                                            <td>{{ checkout.checkoutDate|date }}</td>
+                                            <td>{{ checkout.item.name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                 </table>
+                                 {% else %}
+                                     <div class="alert alert-warning">Currently no checkouts</div>
+                                 {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
     </div>
 {% endblock %}

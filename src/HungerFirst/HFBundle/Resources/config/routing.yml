@@ -34,7 +34,6 @@ hf_customer_edit:
     pattern: /customer/edit/{id}
     defaults: { _controller: HFBundle:Customer:edit, id: 0 }
     requirements:
-        _method:  GET
         id:  \d+   
         
 hf_search_bar: 

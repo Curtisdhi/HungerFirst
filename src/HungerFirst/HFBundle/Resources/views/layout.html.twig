@@ -24,7 +24,7 @@
                         </ul>
                         <form class="navbar-form navbar-left" action="{{ path('hf_search_bar') }}" method="POST" role="search">
                             <div class="form-group">
-                                <input type="text" name="customerSearchType[id]" class="form-control" placeholder="Search by ID">
+                                <input type="number" min="0" required="required" name="customerSearchType[id]" class="form-control"  placeholder="Search by ID">
                             </div>
                             <button class="btn btn-sm btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -37,6 +37,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Customers <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('hf_homepage') }}">Find</a></li>
                                     <li><a href="{{ path('hf_customer_create') }}">Add New</a></li>
                                 </ul>
                             </li>

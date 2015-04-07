@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use HungerFirst\HFBundle\Form\DataTransformer\PhoneNumberDataTransformer;
 
 class CustomerType extends AbstractType
 {
@@ -41,12 +42,13 @@ class CustomerType extends AbstractType
             ),
             'required' => false)
         );
-        
-        $builder->add('phoneNumber', 'text', array(
-            'attr' => array(
-                'placeholder' => 'Phone number',
-            ),
-            'required' => false)
+        $builder->add(
+            $builder->create('phoneNumber', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Phone number',
+                ),
+                'required' => false)
+            )->addModelTransformer(new PhoneNumberDataTransformer())
         );
         
         $builder->add('homeless', 'checkbox', array(
@@ -118,47 +120,7 @@ class CustomerType extends AbstractType
 
         $builder->add('submit', 'submit');
         
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            array($this, 'onPreSubmitData')
-        );
-        $builder->addEventListener(
-            FormEvents::POST_SUBMIT,
-            array($this, 'onPostSubmitData')
-        );
-    }
-    
-    public function onPreSubmitData(FormEvent $event) {
-        $data = $event->getData();
-        //remove all characters from phonenumber
-        if (isset($data['phoneNumber'])) {
-            $data['phoneNumber'] = preg_replace("/[^0-9]/", '', $data['phoneNumber']);
-            //if area code is missing, prepend area code
-            if (strlen($data['phoneNumber']) == 7) {
-                $data['phoneNumber'] = '423'. $data['phoneNumber'];
-            }
-        }
-        $event->setData($data);
-    }
-    
-    public function onPostSubmitData(FormEvent $event) {
-        $data = $event->getData();
-        //remove all characters from phonenumber
-        if ($data->getPhoneNumber()) {
-            $pattern = "/^(\d{3})(\d{3})(\d{1,4})$|^(\d{3})(\d{1,3})$|^(\d{3})$/";
-            $replace = function ($m) {
-                //(555)555-5555
-                $str = "";
-                if (isset($m[0])) $str = "($m[1])$m[2]-$m[3]";
-                if (isset($m[4])) $str = "($m[4])$m[5]";
-                if (isset($m[6])) $str = "($m[6])";
-                return $str;
-            };
-            
-            $number = preg_replace_callback($pattern, $replace, $data->getPhoneNumber());
-            $data->setPhoneNumber($number);
-        }
-        $event->setData($data);
+
     }
     
     public function getName()
