@@ -201,7 +201,7 @@ class Customer
      * @param \DateTime $probationEndDate
      * @return Customer
      */
-    public function setProbationEndDate(\DateTime $probationEndDate) {
+    public function setProbationEndDate($probationEndDate) {
         $this->probationEndDate = $probationEndDate;
         return $this;
     }

@@ -2,6 +2,38 @@
 
 {% block title %}Customer Registration - Hungry First{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+     <script src="{{ asset('res/js/webcam.min.js') }}"></script>
+     
+     <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 320,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false,
+            flip_horiz: true
+        });
+        Webcam.attach('#camera-display');
+
+        function take_snapshot() {
+            Webcam.snap( function(data_uri) {
+                document.getElementById('camera-result').innerHTML = '<img src="'+data_uri+'"/>';
+                var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+                document.getElementById('CustomerType_rawPhoto').value = raw_image_data;
+            } );
+            
+        } 
+        
+    </script>
+{% endblock %}
+
 {% block content %}
     {% for flashMessage in app.session.flashbag.get('success') %}
         <div class="alert alert-success">{{ flashMessage }}</div>
@@ -56,7 +88,21 @@
                         {% endif %}
                     </div>
                     <div class="col-md-4">
-                        <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                        {% if (customer.photo is defined) %}
+                        <div>
+                            <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
+                        </div>
+                        {% endif %}
+                        <a href="javascript:void(take_snapshot())" class="btn btn-default btn-block">Take Snapshot</a>
+                        <div class="row">   
+                            <div class="col-md-6 col-sm-6">
+                                <div id="camera-display"></div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                 <div id="camera-result"></div>
+                            </div>
+                            {{ form_row(form.rawPhoto) }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">

@@ -4,7 +4,7 @@ namespace HungerFirst\HFBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity
@@ -28,10 +28,10 @@ class Photo
     /**
      * @Assert\Image(
      *     maxSize = "250k", 
-     *     minWidth = 468,
-     *     maxWidth = 468,
-     *     minHeight = 60,
-     *     maxHeight = 60
+     *     minWidth = 320,
+     *     maxWidth = 640,
+     *     minHeight = 240,
+     *     maxHeight = 480
      * )
      */
     protected $file;
@@ -74,10 +74,9 @@ class Photo
     /**
      * Sets file.
      *
-     * @param UploadedFile $file
+     * @param File $file
      */
-    public function setFile(UploadedFile $file = null) {
-        $this->football = $file;
+    public function setFile(File $file = null) {
         $this->file = $file;
         // check if we have an old image path
         if (isset($this->path)) {
@@ -110,7 +109,7 @@ class Photo
             : $this->getUploadDir().'/'.$this->path;
     }
 
-    protected function getUploadRootDir() {
+    public function getUploadRootDir() {
         // the absolute directory path where uploaded
         // documents should be saved
         return __DIR__.'/../../../../web/'.$this->getUploadDir();

@@ -128,8 +128,13 @@ class CustomerType extends AbstractType
                 'placeholder' => 'Requested Items',
             ),
             'label' => 'Requested Items',
-            'required' => false)
-        );
+            'required' => false,
+        ));
+        
+        $builder->add('rawPhoto', 'hidden', array(
+            'required' => false,
+            'mapped' => false,
+        ));
         
         if ($this->isAdmin) {
             $builder->add('probationEndDate', 'date', array(

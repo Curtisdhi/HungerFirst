@@ -4,10 +4,12 @@ namespace HungerFirst\HFBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\File;
 use HungerFirst\HFBundle\Form\Type\CustomerType;
 use HungerFirst\HFBundle\Form\Type\CustomerSearchType;
 use HungerFirst\HFBundle\Form\Model\CustomerSearchModel;
 use HungerFirst\HFBundle\Entity\Customer;
+use HungerFirst\HFBundle\Entity\Photo;
 
 class CustomerController extends Controller
 {
@@ -40,6 +42,11 @@ class CustomerController extends Controller
         if ($form->isValid()) {
            $em = $this->getDoctrine()->getManager();
            $customer = $form->getData();
+           
+            //pull file from webcam
+            $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
+
+            $customer->setPhoto($photo);
 
            $em->persist($customer);
 
@@ -66,9 +73,15 @@ class CustomerController extends Controller
 
         $form = $this->createForm(new CustomerType($isAdmin), $customer);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
            $em = $this->getDoctrine()->getManager();
            $customer = $form->getData();
+           
+            //pull file from webcam
+            $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
+
+            $customer->setPhoto($photo);
 
            $em->persist($customer);
 
@@ -128,11 +141,41 @@ class CustomerController extends Controller
                 'form' => $form->createView(),
         ));
     }
-    
+    /**
+     * Pulls file from webcam
+     * 
+     * @param string $base64
+     * @return Photo
+     */
+    public function getPhotoFromBase64($base64) {
+        $binary_data = base64_decode($base64);
+        $photo = new Photo();
+        
+        $dir = $photo->getUploadRootDir();
+        $name = uniqid() .'.jpg';
+        $path = $dir .'/'. $name;
+        
+        if (!file_exists($dir)) {
+            mkdir($dir,0750,true);
+        }
+        
+        $tmp = fopen($path, 'x');
+        fwrite($tmp,  $binary_data);
+        fclose($tmp);
+        
+        $upFile = new File($path, $name);
+                
+        $photo->setFile($upFile);
+
+        return $photo;
+    }
     
     public function hasProbation($customer) {
         $date = new \DateTime();
-        $delta =  $customer->getProbationEndDate()->getTimestamp() - $date->getTimestamp();
+        $delta = 0;
+        if ($customer->getProbationEndDate()) {
+            $delta = $customer->getProbationEndDate()->getTimestamp() - $date->getTimestamp();
+        }
         return $delta > 0;
     }
 }
