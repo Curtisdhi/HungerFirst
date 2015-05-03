@@ -1,7 +1,6 @@
 <?php
 
-namespace HungerFirst\HFBundle\Entity;
-
+namespace HungerFirst\HFBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +11,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class CheckoutRepository extends EntityRepository
 {
+    /**
+     * Finds out if a customer can checkout
+     * 
+     * @param Customer $customer
+     * @param int $dayLimit
+     * @return boolean
+     */
+    public function canCheckout($customer, $dayLimit) {
+        
+        $currentDate = new \DateTime();
+        $nextCheckout = $currentDate->add(new \DateInterval('P'. $dayLimit .'D'));
+        
+        $query = $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)')
+                ->where('c.checkoutDate < :nextCheckout')
+                ->andWhere('c.customer = :customer')
+                ->setParameter('nextCheckout', $nextCheckout)
+                ->setParameter('customer', $customer);
+        
+        return $query->getQuery()->getSingleScalarResult() == 0;
+    }
 }

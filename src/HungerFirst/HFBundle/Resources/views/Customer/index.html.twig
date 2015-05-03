@@ -45,6 +45,10 @@
                     </div>
                 {% endif %}
                 
+                {% for flashMessage in app.session.flashbag.get('warning') %}
+                    <div class="alert alert-warning">{{ flashMessage }}</div>
+                {% endfor %}
+                
                 <div class="row">
                     <div class="col-md-3">
                             {% if (customer.photo.webPath is defined) %}
@@ -138,7 +142,7 @@
                             <div class="panel-heading">
                                 Checkouts
                                 {% if (not hasProbation or is_granted('ROLE_ADMIN')) %}
-                                    <a href="" class="btn btn-info pull-right">Checkout</a>
+                                    <a href="{{ path('hf_checkout', {'id': customer.id}) }}" class="btn btn-info pull-right">Checkout</a>
                                 {% endif %}
                                 <div class="clearfix"></div>
                             </div>
@@ -147,17 +151,18 @@
                                  <table class="table table-hover table-striped customer-listing">
                                     <tr>
                                         <th>
-                                            <span class="glyphicon glyphicon-picture"></span>
+                                            <span class="glyphicon glyphicon-calendar"></span>
                                             Date
                                         </th>
                                         <th>
-                                            Item
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            Cashier
                                         </th>
                                     </tr>
                                     {% for checkout in customer.checkouts %}
-                                        <tr>
+                                        <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
                                             <td>{{ checkout.checkoutDate|date }}</td>
-                                            <td>{{ checkout.item.name }}</td>
+                                            <td>{{ checkout.cashier.username }}</td>
                                         </tr>
                                     {% endfor %}
                                  </table>

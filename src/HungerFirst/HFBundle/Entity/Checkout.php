@@ -31,7 +31,7 @@ class Checkout
     /**
      * @var boolean
      * 
-     * @ORM\Column(name="adminOverride", type="boolean")
+     * @ORM\Column(name="adminOverride", type="boolean", nullable=true)
      */
     private $adminOverride;
     
@@ -51,6 +51,7 @@ class Checkout
 
     public function __construct() {
         $this->checkoutDate = new \DateTime();
+        $this->adminOverride = false;
     }
     
     /**

@@ -24,7 +24,7 @@ class CustomerController extends Controller
         if (!$customer) {
             throw $this->createNotFoundException('This customer doesn\'t exist');
         }
-        $hasProbation = $this->hasProbation($customer);
+        $hasProbation = $this->get('probation_service')->hasProbation($customer);
         
         return $this->render('HFBundle:Customer:index.html.twig', array(
             'customer' => $customer,
@@ -185,12 +185,4 @@ class CustomerController extends Controller
         return $photo;
     }
     
-    public function hasProbation($customer) {
-        $date = new \DateTime();
-        $delta = 0;
-        if ($customer->getProbationEndDate()) {
-            $delta = $customer->getProbationEndDate()->getTimestamp() - $date->getTimestamp();
-        }
-        return $delta > 0;
-    }
 }

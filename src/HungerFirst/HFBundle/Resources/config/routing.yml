@@ -38,5 +38,11 @@ hf_customer_edit:
         
 hf_search_bar: 
     pattern: /search_bar
-    defaults: { _controller: HFBundle:Customer:searchBar }       
+    defaults: { _controller: HFBundle:Customer:searchBar }   
+    
+hf_checkout: 
+    pattern: /checkout/{id}
+    defaults: { _controller: HFBundle:Checkout:checkout, id: 0 }
+    requirements:
+        id:  \d+ 
         
