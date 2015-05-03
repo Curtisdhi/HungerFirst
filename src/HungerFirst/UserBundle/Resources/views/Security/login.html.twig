@@ -14,7 +14,7 @@
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     {% if error %}
-                        <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+                        <div class="alert alert-danger">{{ error.message }}</div>
                     {% endif %}
 
                     <form action="{{ path("fos_user_security_check") }}" method="post">

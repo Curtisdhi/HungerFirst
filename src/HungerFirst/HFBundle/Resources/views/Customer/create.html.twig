@@ -51,6 +51,9 @@
                                 {{ form_row(form.publicHousing) }}
                             </div>
                         </div>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {{ form_row(form.probationEndDate) }}
+                        {% endif %}
                     </div>
                     <div class="col-md-4">
                         <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
@@ -62,6 +65,7 @@
                     </div>
                 </div>
                 {{ form_rest(form) }}
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

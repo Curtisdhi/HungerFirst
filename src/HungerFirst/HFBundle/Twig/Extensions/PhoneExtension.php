@@ -1,8 +1,8 @@
 <?php
 
-namespace HungerFirst\HFBundle\Twig;
+namespace HungerFirst\HFBundle\Twig\Extensions;
 
-class HFExtension extends \Twig_Extension
+class PhoneExtension extends \Twig_Extension
 {
     public function getFilters()
     {
@@ -35,6 +35,6 @@ class HFExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'hf_extension';
+        return 'phone_extension';
     }
 }

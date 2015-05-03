@@ -33,8 +33,8 @@ twig:
         JQUERY_VERSION: "1.11.2"
     form:
         resources: 
+            - 'bootstrap_3_layout.html.twig'
             - 'HFBundle:Form:fields.html.twig'
-            - 'HFBundle:Form:formErrors.html.twig'
 
 # Assetic Configuration
 assetic:

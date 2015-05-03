@@ -37,7 +37,7 @@ class Customer
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="probationEndDate", type="datetime")
+     * @ORM\Column(name="probationEndDate", type="datetime", nullable=true)
      */
     private $probationEndDate;
 
@@ -156,6 +156,7 @@ class Customer
     private $checkouts;
 
     public function __construct() {
+        $this->createdDate = new \DateTime();
         $this->checkouts = new ArrayCollection();
     }
 

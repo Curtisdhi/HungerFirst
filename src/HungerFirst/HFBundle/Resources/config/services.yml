@@ -2,8 +2,13 @@ services:
 #    hf.example:
 #        class: HungerFirst\HFBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
-    app.twig_extension:
-        class: HungerFirst\HFBundle\Twig\HFExtension
+    app.twig_phone_extension:
+        class: HungerFirst\HFBundle\Twig\Extensions\PhoneExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+    app.twig_time_diff_extension:
+        class: HungerFirst\HFBundle\Twig\Extensions\TimeDiffExtension
         public: false
         tags:
             - { name: twig.extension }

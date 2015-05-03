@@ -22,15 +22,20 @@ class CustomerController extends Controller
         if (!$customer) {
             throw $this->createNotFoundException('This customer doesn\'t exist');
         }
+        $hasProbation = $this->hasProbation($customer);
         
         return $this->render('HFBundle:Customer:index.html.twig', array(
             'customer' => $customer,
+            'hasProbation' => $hasProbation,
         ));
     }
     
     public function createAction(Request $request) {
+        $securityContext = $this->container->get('security.context');
+        $isAdmin = $securityContext->isGranted('ROLE_ADMIN');
         $customer = new Customer();
-        $form = $this->createForm(new CustomerType(), $customer);
+
+        $form = $this->createForm(new CustomerType($isAdmin), $customer);
         $form->handleRequest($request);
         if ($form->isValid()) {
            $em = $this->getDoctrine()->getManager();
@@ -50,13 +55,16 @@ class CustomerController extends Controller
     }
     
     public function editAction(Request $request, $id) {
+        $securityContext = $this->container->get('security.context');
+        $isAdmin = $securityContext->isGranted('ROLE_ADMIN');
+        
         $em = $this->getDoctrine()->getManager();
         $customer = $em->find("HFBundle:Customer", $id);
         if (!$customer) {
             throw $this->createNotFoundException('This customer doesn\'t exist');
         }
 
-        $form = $this->createForm(new CustomerType(), $customer);
+        $form = $this->createForm(new CustomerType($isAdmin), $customer);
         $form->handleRequest($request);
         if ($form->isValid()) {
            $em = $this->getDoctrine()->getManager();
@@ -121,4 +129,10 @@ class CustomerController extends Controller
         ));
     }
     
+    
+    public function hasProbation($customer) {
+        $date = new \DateTime();
+        $delta =  $customer->getProbationEndDate()->getTimestamp() - $date->getTimestamp();
+        return $delta > 0;
+    }
 }

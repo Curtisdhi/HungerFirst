@@ -14,7 +14,9 @@
                 {{ customer.firstName }} {{ customer.lastName }}
                 <div class="pull-right">
                     <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-default">Edit</a>
-                    <a href="" class="btn btn-danger">Delete</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="" class="btn btn-danger">Delete</a>
+                    {% endif %}
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -22,6 +24,26 @@
                 {% for flashMessage in app.session.flashbag.get('success') %}
                     <div class="alert alert-success">{{ flashMessage }}</div>
                 {% endfor %}
+                
+                {% if (hasProbation) %}
+                    <div class="alert alert-danger">
+                        <p class="pull-right">
+                            Probation ends in:
+                            <strong>
+                            {{ customer.probationEndDate|time_diff(false) }}
+                            </strong>
+                        </p>
+                        <p>
+                            This customer is currently under probation until
+                            <date>
+                                {{ customer.probationEndDate|date('M d, Y') }}
+                            </date>
+                        </p>
+                        <p>
+                            <strong>You require admin rights to override this.</strong>
+                        </p>
+                    </div>
+                {% endif %}
                 
                 <div class="row">
                     <div class="col-md-3">
@@ -95,17 +117,27 @@
                                     </tr>
                                 </table>
                                 {% if customer.description|length > 0 %}
-                                    <h5>Notes:</h5>
+                                    <h4>Notes:</h4>
                                     <p class="well well-sm">{{ customer.description }}</p>
                                 {% endif %}
-           
-                            </div>
+                                {% if customer.requestedItems|length > 0 %}
+                                    <h4>Requested Items:</h4>
+                                    <p class="well well-sm">{{ customer.requestedItems }}</p>
+                                {% endif %}
+                                
+                            </div>  
                         </div> <!-- ./customer info panel -->
                     </div>
                                 
                     <div class="col-md-3">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Checkouts</div>
+                            <div class="panel-heading">
+                                Checkouts
+                                {% if (not hasProbation or is_granted('ROLE_ADMIN')) %}
+                                    <a href="" class="btn btn-info pull-right">Checkout</a>
+                                {% endif %}
+                                <div class="clearfix"></div>
+                            </div>
                             <div class="panel-body">
                                 {% if (customer.checkouts|length > 0) %}
                                  <table class="table table-hover table-striped customer-listing">

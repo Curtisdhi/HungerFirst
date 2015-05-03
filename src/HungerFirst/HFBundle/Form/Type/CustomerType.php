@@ -4,12 +4,17 @@ namespace HungerFirst\HFBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 use HungerFirst\HFBundle\Form\DataTransformer\PhoneNumberDataTransformer;
 
 class CustomerType extends AbstractType
 {
+    
+    private $isAdmin;
+    
+    public function __construct($isAdmin) {
+        $this->isAdmin = $isAdmin;
+    }
+
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -125,6 +130,16 @@ class CustomerType extends AbstractType
             'label' => 'Requested Items',
             'required' => false)
         );
+        
+        if ($this->isAdmin) {
+            $builder->add('probationEndDate', 'date', array(
+                'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
+               
+                'html5' => true,
+                'label' => 'Probation end date',
+                'required' => false)
+            );
+        }
 
         $builder->add('submit', 'submit');
         
