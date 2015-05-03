@@ -56,7 +56,11 @@
                 {% endif %}
             {% endspaceless%}>
                 <td>
-                    <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                    {% if (customer.photo.webPath is defined) %}
+                        <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
+                    {% else %}
+                        <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                    {% endif %}
                 </td>
                 <td>{{ customer.id }}</td>
                 <td>{{ customer.firstName }} {{ customer.lastName }}</td>

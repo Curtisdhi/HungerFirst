@@ -44,9 +44,15 @@ class CustomerController extends Controller
            $customer = $form->getData();
            
             //pull file from webcam
-            $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
-
-            $customer->setPhoto($photo);
+            if ($form['rawPhoto']->getData()) {
+                //delete photo
+                if ($customer->getPhoto()) {
+                    $em->remove($customer->getPhoto());
+                }
+                
+                $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
+                $customer->setPhoto($photo);
+            }
 
            $em->persist($customer);
 
@@ -75,13 +81,19 @@ class CustomerController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-           $em = $this->getDoctrine()->getManager();
-           $customer = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $customer = $form->getData();
            
             //pull file from webcam
-            $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
-
-            $customer->setPhoto($photo);
+            if ($form['rawPhoto']->getData()) {
+                //delete photo
+                if ($customer->getPhoto()) {
+                    $em->remove($customer->getPhoto());
+                }
+                
+                $photo = $this->getPhotoFromBase64($form['rawPhoto']->getData());
+                $customer->setPhoto($photo);
+            }
 
            $em->persist($customer);
 
@@ -92,7 +104,10 @@ class CustomerController extends Controller
            return $this->redirectToRoute('hf_customer', array('id' => $customer->getId()));
         }
 
-        return $this->render('HFBundle:Customer:create.html.twig', array('form' => $form->createView()));
+        return $this->render('HFBundle:Customer:create.html.twig', array(
+            'form' => $form->createView(),
+            'customer' => $customer,
+        ));
     }
     
     public function listAction(Request $request, $query) {
