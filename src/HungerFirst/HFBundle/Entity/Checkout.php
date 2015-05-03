@@ -22,18 +22,25 @@ class Checkout
     private $id;
 
     /**
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="checkouts")
+     */
+    private $cashier;
+    
+    /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="adminOverride", type="boolean")
+     */
+    private $adminOverride;
+    
+    /**
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="checkouts")
      */
     private $customer;
-
-    /**
-     * @var Item
-     *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="checkouts")
-     */
-    private $item;
 
     /**
      * @var \DateTime
@@ -46,7 +53,6 @@ class Checkout
         $this->checkoutDate = new \DateTime();
     }
     
-
     /**
      * Get id
      *
@@ -81,29 +87,6 @@ class Checkout
     }
 
     /**
-     * Set item
-     *
-     * @param Item $item
-     * @return Checkout
-     */
-    public function setItem($item)
-    {
-        $this->item = $item;
-
-        return $this;
-    }
-
-    /**
-     * Get item
-     *
-     * @return Item
-     */
-    public function getItem()
-    {
-        return $this->item;
-    }
-
-    /**
      * Set checkoutDate
      *
      * @param \DateTime $checkoutDate
@@ -125,4 +108,48 @@ class Checkout
     {
         return $this->checkoutDate;
     }
+    
+    /**
+     * Get admin override
+     * 
+     * @return boolean
+     */
+    public function getAdminOverride() {
+        return $this->adminOverride;
+    }
+    
+    /**
+     * Set admin override
+     * 
+     * @param boolean $adminOverride
+     * @return Checkout
+     */
+    public function setAdminOverride($adminOverride) {
+        $this->adminOverride = $adminOverride;
+        return $this;
+    }
+    
+    /**
+     * Get cashier
+     * 
+     * @return User
+     */
+    public function getCashier() {
+        return $this->cashier;
+    }
+    
+    /**
+     * Set cashier
+     * 
+     * @param User $cashier
+     * @return Checkout
+     */
+    public function setCashier($cashier) {
+        $this->cashier = $cashier;
+        return $this;
+    }
+
+
+
+
 }

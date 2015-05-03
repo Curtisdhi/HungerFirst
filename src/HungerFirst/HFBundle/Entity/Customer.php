@@ -26,6 +26,20 @@ class Customer
      * @ORM\Id
      */
     private $id;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdDate", type="datetime")
+     */
+    private $createdDate;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="probationEndDate", type="datetime")
+     */
+    private $probationEndDate;
 
     /**
      * @var string
@@ -117,6 +131,13 @@ class Customer
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="requestedItems", type="text", nullable=true)
+     */
+    private $requestedItems;
 
     /**
      * @var Photo
@@ -127,14 +148,6 @@ class Customer
     private $photo;
     
     /**
-     * @var WantedItem[]
-     * 
-     * @ORM\OneToMany(targetEntity="WantedItem", mappedBy="customer", cascade={"persist", "remove"})
-     *
-     */
-    private $wantedItems;
-    
-    /**
      * @var Checkout[]
      * 
      * @ORM\OneToMany(targetEntity="Checkout", mappedBy="customer", cascade={"persist", "remove"})
@@ -143,8 +156,7 @@ class Customer
     private $checkouts;
 
     public function __construct() {
-        $wantedItems = new ArrayCollection();
-        $checkouts = new ArrayCollection();
+        $this->checkouts = new ArrayCollection();
     }
 
     /**
@@ -163,6 +175,34 @@ class Customer
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get created date
+     * 
+     * @return /DateTime
+     */
+    public function getCreatedDate() {
+        return $this->createdDate;
+    }
+
+    /**
+     * Get probation end date
+     * @return /DateTime
+     */
+    public function getProbationEndDate() {
+        return $this->probationEndDate;
+    }
+
+    /**
+     * Set probation end date
+     * 
+     * @param \DateTime $probationEndDate
+     * @return Customer
+     */
+    public function setProbationEndDate(\DateTime $probationEndDate) {
+        $this->probationEndDate = $probationEndDate;
+        return $this;
     }
 
     /**
@@ -486,28 +526,7 @@ class Customer
     {
         return $this->photo;
     }
-    
-    /**
-     * Set wanted items
-     * 
-     * @param WantedItem[] $wantedItems
-     * @return Customer
-     */
-    function setWantedItems($wantedItems) {
-        $this->wantedItems = $wantedItems;
-        
-        return $this;
-    }
-    
-    /**
-     * Get wanted items
-     * 
-     * @return WantedItem[]
-     */
-    function getWantedItems() {
-        return $this->wantedItems;
-    }
-    
+
     /**
      * Set checkouts
      * 
@@ -527,6 +546,26 @@ class Customer
      */
     function getCheckouts() {
         return $this->checkouts;
+    }
+
+    /**
+     * Get requested items
+     * 
+     * @return string
+     */
+    public function getRequestedItems() {
+        return $this->requestedItems;
+    }
+
+    /**
+     * Set requested items
+     * 
+     * @param string $requestedItems
+     * @return Customer
+     */
+    public function setRequestedItems($requestedItems) {
+        $this->requestedItems = $requestedItems;
+        return $this;
     }
 
 }

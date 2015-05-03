@@ -2,7 +2,6 @@
 namespace HungerFirst\HFBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class PhoneNumberDataTransformer implements DataTransformerInterface {
     

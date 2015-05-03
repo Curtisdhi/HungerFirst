@@ -116,9 +116,9 @@ class CustomerController extends Controller
         }
 
         return $this->render('HFBundle:Customer:searchBar.html.twig', 
-                array(
-                    'form' => $form->createView())
-                );
+            array(
+                'form' => $form->createView(),
+        ));
     }
     
 }

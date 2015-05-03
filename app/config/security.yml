@@ -15,11 +15,6 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -42,9 +37,9 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/register, role: ROLE_ADMIN }
         - { path: ^/, role: IS_AUTHENTICATED_FULLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        
         
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER

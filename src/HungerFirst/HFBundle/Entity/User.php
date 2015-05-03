@@ -25,7 +25,19 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @var Checkout[]
+     * 
+     * @ORM\OneToMany(targetEntity="Checkout", mappedBy="user", cascade={"persist", "remove"})
+     *
+     */
+    private $checkouts;
 
+    public function __construct() {
+        $this->checkouts = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -36,4 +48,13 @@ class User extends BaseUser
         return $this->id;
     }
     
+    /**
+     * Get checkouts
+     * 
+     * @return Checkout[]
+     */
+    public function getCheckouts() {
+        return $this->checkouts;
+    }
+
 }

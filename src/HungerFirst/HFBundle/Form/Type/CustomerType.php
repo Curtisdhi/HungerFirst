@@ -117,6 +117,14 @@ class CustomerType extends AbstractType
             'label' => 'Notes',
             'required' => false)
         );
+        
+        $builder->add('requestedItems', 'textarea', array(
+            'attr' => array(
+                'placeholder' => 'Requested Items',
+            ),
+            'label' => 'Requested Items',
+            'required' => false)
+        );
 
         $builder->add('submit', 'submit');
         
