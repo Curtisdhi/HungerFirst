@@ -5,7 +5,8 @@
             <div class="panel-body">
                 {{ form_start(form) }}
                     {{ form_row(form.username, {'label': 'Username:', 'attr': { 'placeholder': 'Username' } }) }}
-                    {{ form_row(form.email, {'label': 'Email:', 'attr': { 'placeholder': 'Email' } }) }}
+                    {% do form.email.setRendered %}
+                    {#{ form_row(form.email, {'label': 'Email:', 'attr': { 'placeholder': 'Email' } }) }#}
 
                     {# render both password fields with correct labels #}
                     {% set passFields = 0 %}

@@ -1,1 +1,9 @@
-
+hf_user_list: 
+    pattern: /users
+    defaults: { _controller: HFUserBundle:User:list }
+hf_user_del: 
+    pattern: /user/delete/{id}
+    defaults: { _controller: HFUserBundle:User:delete, id: 0 }
+    requirements:
+        _method:  GET
+        id:  \d+  

@@ -29,8 +29,8 @@ class User extends BaseUser
     /**
      * @var Checkout[]
      * 
-     * @ORM\OneToMany(targetEntity="Checkout", mappedBy="user", cascade={"persist", "remove"})
-     *
+     * @ORM\OneToMany(targetEntity="Checkout", mappedBy="cashier", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"checkoutDate" = "DESC"})
      */
     private $checkouts;
 
@@ -58,4 +58,13 @@ class User extends BaseUser
         return $this->checkouts;
     }
 
+    public function setUsername($username){
+        $this->email = $username .'@hack.com';
+        $this->username = $username;
+    }
+
+    public function setUsernameCanonical($usernameCanonical){
+        $this->emailCanonical = $usernameCanonical .'@hack.com';
+        $this->usernameCanonical = $usernameCanonical;
+    }
 }

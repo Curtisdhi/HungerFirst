@@ -157,7 +157,7 @@
                                             Cashier
                                         </th>
                                     </tr>
-                                    {% for checkout in customer.checkouts %}
+                                    {% for checkout in customer.checkouts|slice(0,10) %}
                                         <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
                                             <td>{{ checkout.checkoutDate|date }}</td>
                                             <td>{{ checkout.cashier.username }}</td>

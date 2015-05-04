@@ -151,7 +151,7 @@ class Customer
      * @var Checkout[]
      * 
      * @ORM\OneToMany(targetEntity="Checkout", mappedBy="customer", cascade={"persist", "remove"})
-     *
+     * @ORM\OrderBy({"checkoutDate" = "DESC"})
      */
     private $checkouts;
 

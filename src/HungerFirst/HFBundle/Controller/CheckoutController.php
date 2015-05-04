@@ -27,7 +27,7 @@ class CheckoutController extends Controller
         }
         else if ($hasProbation || !$canCheckout) {
             //require admin override
-            $this->addFlash('warning', 'Sorry, but this customer can not be checkout!');
+            $this->addFlash('warning', 'Sorry, but this customer can not be checkout without admin rights!');
             return $this->forward('HFBundle:AdminOverride:requireOverride', array(
                'route' => 'hf_checkout',
                'parameters' => array('id' => $id),
