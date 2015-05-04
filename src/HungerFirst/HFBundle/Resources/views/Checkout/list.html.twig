@@ -1,0 +1,76 @@
+{% extends 'HFBundle::layout.html.twig' %}
+
+{% block title %}Checkouts - Hungry First Internal{% endblock %}
+
+{% block content %}  
+    <div class="panel panel-primary">
+        <div class="panel-heading">Checkouts</div>
+        <div class='panel-body'>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        <span class="glyphicon glyphicon-user"></span>
+                        Customer's First & Last Name
+                    </th>
+                    <th>
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        Date
+                    </th>
+                    <th>
+                        <span class="glyphicon glyphicon-barcode"></span>
+                        Cashier
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for checkout in checkouts %}
+                    <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
+                        <td>{{ checkout.customer.name }}</td>
+                        <td>{{ checkout.checkoutDate|date('M d, Y') }}</td>
+                        <td>{{ checkout.cashier.username }}</td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="alert alert-warning">
+                                Sorry, there are no checkouts to be displayed.
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if pages > 1 %}
+        <div class="panel-footer">
+            <div class="text-center">
+                <ul class="pagination pagination-panel">
+
+                    {% for i in 1..pages %}
+                        {% if i == 1 and i == page %}
+                            <li class="disabled"><a>&laquo;</a></li>
+                        {% elseif i == 1 %}
+                            <li><a href="{{ path('hf_checkouts', {'page': (page-1)}) }}">&laquo;</a></li>
+                        {% endif %}
+
+                        {% if i == page %}
+                            <li class="active"><a>{{ i }} <span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="{{ path('hf_checkouts', {'page': i}) }}">{{ i }}</a></li>
+                        {% endif %}
+
+                        {% if i == page and page == pages %}
+                            <li class="disabled"><a>&raquo;</a></li>
+                        {% elseif i == pages %}
+                            <li><a href="{{ path('hf_checkouts', {'page': (page+1)}) }}">&raquo;</a></li>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

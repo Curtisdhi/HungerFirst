@@ -28,7 +28,7 @@
         {% for flashMessage in app.session.flashbag.get('error') %}
             <div class="alert alert-danger">{{ flashMessage }}</div>
         {% endfor %}
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Users
                 <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info pull-right">Add User</a>
@@ -37,7 +37,7 @@
             <div class="panel-body">
                 <table class="table table-hover table-striped">
                     <tr>
-                        <th><span class="glyphicon glyphicon-user"></span> Name</th>
+                        <th><span class="glyphicon glyphicon-barcode"></span> Cashier</th>
                         <th>Checkouts</th>
                         <th><span class="glyphicon glyphicon-wrench"></span> Actions</th>
                     </tr>

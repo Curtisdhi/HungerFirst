@@ -44,4 +44,29 @@ class CheckoutController extends Controller
         
         return $this->redirectToRoute('hf_customer', array('id' => $customer->getId()));
     }
+    
+    
+    public function listAction($page) {
+        $em = $this->getDoctrine()->getManager();
+        $maxCheckoutsOnPage = 20;
+        
+        $offset = ($page - 1) * $maxCheckoutsOnPage;
+
+        $checkoutRepo = $em->getRepository('HFBundle:Checkout'); 
+        
+        
+        $checkouts = $checkoutRepo->findByWithLimit($offset, $maxCheckoutsOnPage);
+
+        $checkoutCount = $checkoutRepo->countAll();
+
+        $pages = ceil($checkoutCount / $maxCheckoutsOnPage);
+        
+        return $this->render('HFBundle:Checkout:list.html.twig', 
+            array('checkouts' => $checkouts,
+                'page'  => $page,
+                'pages' => $pages,
+                'checkoutCount' => $checkoutCount,
+                'maxCheckoutsOnPage' => $maxCheckoutsOnPage,
+            ));
+    }
 }

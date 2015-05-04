@@ -6,7 +6,7 @@
     <div class="panel-heading">
         Customers
         <span class="pull-right">
-            <a href="{{ path('hf_customer_create') }}" class="btn btn-success">Add</a>
+            <a href="{{ path('hf_customer_create') }}" class="btn btn-info">Add Customer</a>
         </span>
         <div class="clearfix"></div>
     </div>
@@ -63,7 +63,7 @@
                     {% endif %}
                 </td>
                 <td>{{ customer.id }}</td>
-                <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+                <td>{{ customer.name }}</td>
                 <td>{{ customer.address }}</td>
                 <td>{{ customer.phoneNumber|phone }}</td>
                 <td>

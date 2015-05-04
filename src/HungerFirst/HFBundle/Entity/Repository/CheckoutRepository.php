@@ -32,4 +32,18 @@ class CheckoutRepository extends EntityRepository
         
         return $query->getQuery()->getSingleScalarResult() == 0;
     }
+    
+    public function countAll() {
+        $query = $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)');
+        return $query->getQuery()->getSingleScalarResult();
+    }
+    
+    public function findByWithLimit($offset, $max) {
+        $query = $this->createQueryBuilder('c')
+            ->setFirstResult($offset)
+            ->setMaxResults($max);
+
+        return $query->getQuery()->getResult();
+    }
 }

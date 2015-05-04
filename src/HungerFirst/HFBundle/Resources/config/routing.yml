@@ -18,6 +18,7 @@ hf_homepage:
     requirements:
         _method:  GET
         id:  \d+   
+        page: \d+
 
 hf_customer:
     pattern: /customer/{id}
@@ -45,4 +46,11 @@ hf_checkout:
     defaults: { _controller: HFBundle:Checkout:checkout, id: 0 }
     requirements:
         id:  \d+ 
-        
+hf_checkouts:
+    path:     /checkouts/{page}
+    defaults: 
+        _controller: HFBundle:Checkout:list
+        page: 1
+    requirements:
+        _method:  GET
+        page:  \d+   
