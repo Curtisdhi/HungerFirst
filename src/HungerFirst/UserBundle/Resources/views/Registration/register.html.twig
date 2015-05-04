@@ -4,5 +4,6 @@
 
 
 {% block content %}
-{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    {{ include('HFBundle:Snippets:logo.html.twig') }}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
 {% endblock content %}

@@ -3,11 +3,7 @@
 {% block title %}Hungry First Internal{% endblock %}
 
 {% block content %}
-    <header>
-        <div>
-            <img class="img-responsive" style="max-width: 300px;margin: 0 auto;" src="{{ asset('res/images/logo.png') }}"/>
-        </div>
-    </header>
+    {{ include('HFBundle:Snippets:logo.html.twig') }}
     <div class="container-fluid">
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">{{ flashMessage }}</div>

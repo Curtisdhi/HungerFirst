@@ -3,11 +3,7 @@
 {% block title %}Hungry First Internal{% endblock %}
 
 {% block content %}
-    <header>
-        <div>
-            <img class="img-responsive" style="max-width: 300px;margin: 0 auto;" src="{{ asset('res/images/logo.png') }}">
-        </div>
-    </header>
+    {{ include('HFBundle:Snippets:logo.html.twig') }}
     <div class="container-fluid">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -37,6 +33,26 @@
                             This customer is currently under probation until
                             <date>
                                 {{ customer.probationEndDate|date('M d, Y') }}
+                            </date>
+                        </p>
+                        <p>
+                            <strong>You require admin rights to override this.</strong>
+                        </p>
+                    </div>
+                {% endif %}
+                
+                {% if (lastCheckout) %}
+                    <div class="alert alert-warning">
+                        <p class="pull-right">
+                            Checkouted
+                            <strong>
+                            {{ lastCheckout.checkoutDate|time_diff(true) }}
+                            </strong>
+                        </p>
+                        <p>
+                            This customer has recently checkouted
+                            <date>
+                                {{ lastCheckout.checkoutDate|date('M d, Y') }}
                             </date>
                         </p>
                         <p>

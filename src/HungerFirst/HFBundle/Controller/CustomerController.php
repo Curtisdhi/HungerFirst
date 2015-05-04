@@ -24,11 +24,21 @@ class CustomerController extends Controller
         if (!$customer) {
             throw $this->createNotFoundException('This customer doesn\'t exist');
         }
+        
+        $checkoutRepo = $em->getRepository('HFBundle:Checkout'); 
+        $canCheckout = $checkoutRepo->canCheckout($customer, $this->container->getParameter('checkout_day_limit'));
+        
+        $lastCheckout = null;
+        if (!$canCheckout) {
+            $lastCheckout = $checkoutRepo->getLastOne($customer);
+        }
+        
         $hasProbation = $this->get('probation_service')->hasProbation($customer);
         
         return $this->render('HFBundle:Customer:index.html.twig', array(
             'customer' => $customer,
             'hasProbation' => $hasProbation,
+            'lastCheckout' => $lastCheckout,
         ));
     }
     

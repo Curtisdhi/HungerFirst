@@ -3,6 +3,10 @@
 {% block title %}Checkouts - Hungry First Internal{% endblock %}
 
 {% block content %}  
+    {{ include('HFBundle:Snippets:logo.html.twig') }}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+    {% endfor %}
     <div class="panel panel-primary">
         <div class="panel-heading">Checkouts</div>
         <div class='panel-body'>
@@ -26,7 +30,11 @@
                 <tbody>
                 {% for checkout in checkouts %}
                     <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
-                        <td>{{ checkout.customer.name }}</td>
+                        <td>
+                            <a href="{{ path('hf_customer', {'id': checkout.customer.id}) }}" class="btn btn-link">
+                                {{ checkout.customer.name }}
+                            </a>
+                        </td>
                         <td>{{ checkout.checkoutDate|date('M d, Y') }}</td>
                         <td>{{ checkout.cashier.username }}</td>
                     </tr>

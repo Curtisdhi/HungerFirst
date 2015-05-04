@@ -33,6 +33,24 @@ class CheckoutRepository extends EntityRepository
         return $query->getQuery()->getSingleScalarResult() == 0;
     }
     
+    /**
+     * Gets last customer checkout
+     * 
+     * @param Customer $customer
+     * @param int $dayLimit
+     * @return boolean
+     */
+    public function getLastOne($customer) {
+        
+        $query = $this->createQueryBuilder('c')
+                ->setMaxResults(1)
+                ->andWhere('c.customer = :customer')
+                ->orderBy('c.checkoutDate', 'DESC')
+                ->setParameter('customer', $customer);
+        
+        return $query->getQuery()->getSingleResult();
+    }
+    
     public function countAll() {
         $query = $this->createQueryBuilder('c')
                 ->select('COUNT(c.id)');

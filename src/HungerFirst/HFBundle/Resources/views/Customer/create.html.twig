@@ -38,12 +38,18 @@
     {% for flashMessage in app.session.flashbag.get('success') %}
         <div class="alert alert-success">{{ flashMessage }}</div>
     {% endfor %}
-    <header>
-        
-    </header>
     <div class="container-fluid">
         <div class="panel panel-primary register_form">
-            <div class="panel-heading">Customer Registration</div>
+            <div class="panel-heading">
+                Customer Registration
+                <a href="{%- if customer is defined -%}
+                        {{ path('hf_customer', {'id': customer.id}) }}
+                   {%- else -%}
+                        javascript:history.back(-1)
+                   {%- endif -%}" class="btn btn-info pull-right">Back</a>
+                <div class="clearfix"></div>
+                
+            </div>
             <div class="panel-body">
                 {{ form_start(form) }}
                 <div class="row">
