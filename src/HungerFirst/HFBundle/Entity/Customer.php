@@ -241,7 +241,7 @@ class Customer
 
         return $this;
     }
-
+    
     /**
      * Get lastName
      *
@@ -250,6 +250,15 @@ class Customer
     public function getLastName()
     {
         return $this->lastName;
+    }
+    
+    /**
+     * Get full name
+     * 
+     * @return string
+     */
+    public function getName() {
+        return $this->getFirstName() .' '. $this->getLastName();
     }
 
     /**

@@ -19,3 +19,4 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     checkout_day_limit: 7
+    admin_override_keys: [a9000,b9000]

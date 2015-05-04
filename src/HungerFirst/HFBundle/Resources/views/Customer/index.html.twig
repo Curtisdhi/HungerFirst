@@ -141,9 +141,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 Checkouts
-                                {% if (not hasProbation or is_granted('ROLE_ADMIN')) %}
-                                    <a href="{{ path('hf_checkout', {'id': customer.id}) }}" class="btn btn-info pull-right">Checkout</a>
-                                {% endif %}
+                                <a href="{{ path('hf_checkout', {'id': customer.id}) }}" class="btn btn-info pull-right">Checkout</a>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">

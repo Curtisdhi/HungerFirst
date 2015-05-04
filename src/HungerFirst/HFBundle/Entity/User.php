@@ -35,6 +35,7 @@ class User extends BaseUser
     private $checkouts;
 
     public function __construct() {
+        parent::__construct();
         $this->checkouts = new ArrayCollection();
     }
     

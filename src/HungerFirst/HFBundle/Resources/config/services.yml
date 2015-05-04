@@ -5,11 +5,17 @@ services:
 
     probation_service:
         class: HungerFirst\HFBundle\Service\ProbationService
+        
+    admin_override_service:
+        class: HungerFirst\HFBundle\Service\AdminOverrideService
+        arguments: [%admin_override_keys%]
+        
     app.twig_phone_extension:
         class: HungerFirst\HFBundle\Twig\Extensions\PhoneExtension
         public: false
         tags:
             - { name: twig.extension }
+            
     app.twig_time_diff_extension:
         class: HungerFirst\HFBundle\Twig\Extensions\TimeDiffExtension
         public: false
