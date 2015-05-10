@@ -36,7 +36,7 @@
                             </date>
                         </p>
                         <p>
-                            <strong>You require admin rights to override this.</strong>
+                            <strong>You will require admin rights to override this.</strong>
                         </p>
                     </div>
                 {% endif %}
@@ -56,7 +56,7 @@
                             </date>
                         </p>
                         <p>
-                            <strong>You require admin rights to override this.</strong>
+                            <strong>You will require admin rights to override this.</strong>
                         </p>
                     </div>
                 {% endif %}
@@ -70,7 +70,7 @@
                             {% if (customer.photo.webPath is defined) %}
                                 <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
                             {% else %}
-                                <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
+                                <img class="img-thumbnail" src="{{ asset('res/images/blank_person.png') }}">
                             {% endif %}
                     </div>
                     <div class="col-md-6">
@@ -78,67 +78,73 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">Info</div>
                             <div class="panel-body">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>ID:</th>
-                                        <td>{{ customer.id }}</td>
-                                        <th>Full Name:</th>
-                                        <td>{{ (customer.firstName ~' '~ customer.lastName)|title }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Address:</th>
-                                        <td>{{ customer.address }}</td>
-                                        <th>Phone Number</th>
-                                        <td>{{ customer.phoneNumber|phone }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Household Size:</th>
-                                        <td>{{ customer.householdSize }}</td>
-                                        <th>Children in Household:</th>
-                                        <td>{{ customer.childrenInHousehold }}</td>
-                                    </tr>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>ID:</th>
+                                            <td>{{ customer.id }}</td>
+                                            <th>Full Name:</th>
+                                            <td>{{ (customer.firstName ~' '~ customer.lastName)|title }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address:</th>
+                                            <td>{{ customer.address }}</td>
+                                            <th>Phone Number</th>
+                                            <td>{{ customer.phoneNumber|phone }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Household Size:</th>
+                                            <td>{{ customer.householdSize }}</td>
+                                            <th>Children in Household:</th>
+                                            <td>{{ customer.childrenInHousehold }}</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>Homeless</th>
-                                        <th>FoodStamps</th>
-                                        <th>Social Security</th>
-                                        <th>Family First</th>
-                                        <th>Enegry Program</th>
-                                        <th>Public Housing</th>
-                                    </tr>
-                                    <tr>
-                                        <td>{%- if customer.homeless -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                        <td>{%- if customer.foodstamps -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                        <td>{%- if customer.socialSecurity -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                        <td>{%- if customer.familyFirst -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                        <td>{%- if customer.enegryProgram -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                        <td>{%- if customer.publicHousing -%}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                            {% else %}
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            {%- endif -%}</td>
-                                    </tr>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Homeless</th>
+                                            <th>FoodStamps</th>
+                                            <th>Social Security</th>
+                                            <th>Family First</th>
+                                            <th>Enegry Program</th>
+                                            <th>Public Housing</th>
+                                        </tr>
+                                    </thead>
+                                    <tobdy>
+                                        <tr>
+                                            <td>{%- if customer.homeless -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                            <td>{%- if customer.foodstamps -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                            <td>{%- if customer.socialSecurity -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                            <td>{%- if customer.familyFirst -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                            <td>{%- if customer.enegryProgram -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                            <td>{%- if customer.publicHousing -%}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                {% else %}
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                {%- endif -%}</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                                 {% if customer.description|length > 0 %}
                                     <h4>Notes:</h4>
@@ -162,23 +168,27 @@
                             </div>
                             <div class="panel-body">
                                 {% if (customer.checkouts|length > 0) %}
-                                 <table class="table table-hover table-striped customer-listing">
-                                    <tr>
-                                        <th>
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                            Date
-                                        </th>
-                                        <th>
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            Cashier
-                                        </th>
-                                    </tr>
-                                    {% for checkout in customer.checkouts|slice(0,10) %}
-                                        <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
-                                            <td>{{ checkout.checkoutDate|date }}</td>
-                                            <td>{{ checkout.cashier.username }}</td>
+                                 <table class="table table-hover table-striped listing">
+                                     <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                Date
+                                            </th>
+                                            <th>
+                                                <span class="glyphicon glyphicon-user"></span>
+                                                Cashier
+                                            </th>
+                                     </thead>
+                                     <tbody>
                                         </tr>
-                                    {% endfor %}
+                                        {% for checkout in customer.checkouts|slice(0,10) %}
+                                            <tr {{ checkout.adminOverride ? 'class="text-warning" title="Admin Override"' : '' }}>
+                                                <td>{{ checkout.checkoutDate|date }}</td>
+                                                <td>{{ checkout.cashier.username }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                     </tbody>
                                  </table>
                                  {% else %}
                                      <div class="alert alert-warning">Currently no checkouts</div>

@@ -4,7 +4,24 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
+    <style>
+        #camera-result {
+            width: 320px;
+            height: 320px;
+        }
+        #camera-result img {
+            width: 320px;
+        }
+        #camera-display {
+            position: absolute;
+            top: 23px;
+            left: 20px
+        }
+        #camera-display video { 
+            width: 150px !important;
+            height: 150px !important;
+        }
+    </style>
 {% endblock %}
 
 {% block scripts %}
@@ -23,8 +40,9 @@
         Webcam.attach('#camera-display');
 
         function take_snapshot() {
+            console.log('derp');
             Webcam.snap( function(data_uri) {
-                $('#camera-result img').src = data_uri;
+                $('#camera-result img').attr('src', data_uri);
                 var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
                 document.getElementById('CustomerType_rawPhoto').value = raw_image_data;
             } );
@@ -94,25 +112,19 @@
                         {% endif %}
                     </div>
                     <div class="col-md-4">
-                        <div>
+                        <a href="javascript:void(take_snapshot())" class="btn btn-default btn-block">Take Snapshot</a>
+                        
+                        <!-- display the webcam inside of the result -->
+                        <div id="camera-result">
                             {% if (customer.photo.webPath is defined) %}
                                 <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
-                            {% endif %}
+                            {% else %}
+                                <img class="img-thumbnail" src="{{ asset('res/images/blank_person.png') }}">
+                            {% endif %} 
+                            <div id="camera-display"></div>
                         </div>
-                        <a href="javascript:void(take_snapshot())" class="btn btn-default btn-block">Take Snapshot</a>
-                        <div class="row">   
-                            <div class="col-md-6 col-sm-6">
-                                <div id="camera-display">
-                                    <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                 <div id="camera-result">
-                                    <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
-                                 </div>
-                            </div>
-                            {{ form_row(form.rawPhoto) }}
-                        </div>
+                        {{ form_row(form.rawPhoto) }}
+                       
                     </div>
                 </div>
                 <div class="row">

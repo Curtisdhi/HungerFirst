@@ -19,10 +19,14 @@ body {
     margin-bottom: 0;
 }
 
-.customer-listing img {
+.listing th, .listing td {
+    border-color: #dddddd !important;
+}
+
+.listing.customers img {
     width: 50px;
 }
-.customer-listing img:hover {
+.listing.customers img:hover {
     width: 200px;
 }
 

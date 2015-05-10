@@ -170,7 +170,7 @@ class Photo
      */
     public function removeUpload()
     {
-        if ($this->temp) {
+        if ($this->temp && file_exists($this->temp)) {
             unlink($this->temp);
         }
     }

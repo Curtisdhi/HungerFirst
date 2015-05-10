@@ -10,76 +10,82 @@
         </span>
         <div class="clearfix"></div>
     </div>
-    <table class="table table-hover table-striped customer-listing">
-        <tr>
-            <th>
-                <span class="glyphicon glyphicon-picture"></span>
-                Photo
-            </th>
-            <th>
-                <span class="glyphicon">#</span>
-                ID
-            </th>
-            <th>
-                <span class="glyphicon glyphicon-user"></span>
-                First & Last Name
-            </th>
-            <th>
-                <span class="glyphicon glyphicon-road"></span>
-                Address
-            </th>
-            <th>
-                <span class="glyphicon glyphicon-phone-alt"></span>
-                Phone Number
-            </th>
-            <th>
-                <span class="glyphicon glyphicon-wrench"></span>
-                Actions
-            </th>
-        </tr>
-        {% set alreadyExist = false %}
-        {% for customer in customers %}
-            {% spaceless %}
-                <tr
-                {% if (query.id == customer.id) or
-                        ((query.firstName|lower == customer.firstName|lower) and
-                            (query.lastName|lower == customer.lastName|lower)) or
-                        (query.address|lower == customer.address|lower) or
-                        (query.phoneNumber|replace({'-':''}) == customer.phoneNumber|replace({'-':''}))
-                %}
-                    {% if alreadyExist %}
-                        class="danger"
-                    {% else %}
-                        class="success"
-                        {% set alreadyExist = true %}
-                    {% endif %}
-                {% endif %}
-            {% endspaceless%}>
-                <td>
-                    {% if (customer.photo.webPath is defined) %}
-                        <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
-                    {% else %}
-                        <img class="img-thumbnail" src="http://www.soothetube.com/wp-content/uploads/2012/05/Bob-Ross2.jpg">
-                    {% endif %}
-                </td>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.address }}</td>
-                <td>{{ customer.phoneNumber|phone }}</td>
-                <td>
-                    <a href="{{ path('hf_customer',{'id': customer.id}) }}" class="btn btn-sm btn-default">View</a>
-                    <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-sm btn-default">Edit</a>
-                </td>
-            </tr>
-        {% else %}
+    <table class="table table-hover table-striped listing customers">
+        <thead>
             <tr>
-                <td colspan="5">
-                    <div class="alert alert-warning">
-                        Sorry, there are no customers to be displayed.
-                    </div>
-                </td>
+                <th>
+                    <span class="glyphicon glyphicon-picture"></span>
+                    Photo
+                </th>
+                <th>
+                    <span class="glyphicon">#</span>
+                    ID
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-user"></span>
+                    First & Last Name
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-road"></span>
+                    Address
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-phone-alt"></span>
+                    Phone Number
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-wrench"></span>
+                    Actions
+                </th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% set alreadyExist = false %}
+            {% for customer in customers %}
+                {% spaceless %}
+                    <tr
+                    {% if (query.id == customer.id) or
+                            ((query.firstName|lower == customer.firstName|lower) and
+                                (query.lastName|lower == customer.lastName|lower)) or
+                            (query.address|lower == customer.address|lower) or
+                            (query.phoneNumber|replace({'-':''}) == customer.phoneNumber|replace({'-':''}))
+                    %}
+                        {% if alreadyExist %}
+                            class="warning"
+                        {% else %}
+                            class="success"
+                            {% set alreadyExist = true %}
+                        {% endif %}
+                    {% endif %}
+                {% endspaceless%}>
+                    <td>
+                        <a href="{{ path('hf_customer',{'id': customer.id}) }}">
+                        {% if (customer.photo.webPath is defined) %}
+                            <img class="img-responsive img-thumbnail" src="{{ asset(customer.photo.webPath) }}">
+                        {% else %}
+                            <img class="img-thumbnail" src="{{ asset('res/images/blank_person.png') }}">
+                        {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.phoneNumber|phone }}</td>
+                    <td>
+                        <a href="{{ path('hf_customer',{'id': customer.id}) }}" class="btn btn-sm btn-default">View</a>
+                        <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-sm btn-default">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">
+                        <div class="alert alert-warning">
+                            Sorry, there are no customers to be displayed.
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     {% if pages > 1 %}
