@@ -11,7 +11,7 @@
                 <div class="pull-right">
                     <a href="{{ path('hf_customer_edit',{'id': customer.id}) }}" class="btn btn-default">Edit</a>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="" class="btn btn-danger">Delete</a>
+                        <a id="customer_delete" href="{{ path('hf_customer_remove', {'id': customer.id}) }}" class="btn btn-danger">Delete</a>
                     {% endif %}
                 </div>
                 <div class="clearfix"></div>
@@ -201,4 +201,18 @@
         </div>
        
     </div>
+{% endblock %}
+    
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+           $('#customer_delete').click(function(e) {
+              if (!window.confirm("Are you sure?")) {
+                  //cancel delete event
+                  e.preventDefault();
+              } 
+           });
+        });
+    </script>
 {% endblock %}

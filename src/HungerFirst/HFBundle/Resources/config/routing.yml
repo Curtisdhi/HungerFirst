@@ -37,6 +37,12 @@ hf_customer_edit:
     requirements:
         id:  \d+   
         
+hf_customer_remove:
+    pattern: /customer/remove/{id}
+    defaults: { _controller: HFBundle:Customer:remove, id: 0 }
+    requirements:
+        id:  \d+  
+        
 hf_search_bar: 
     pattern: /search_bar
     defaults: { _controller: HFBundle:Customer:searchBar }   

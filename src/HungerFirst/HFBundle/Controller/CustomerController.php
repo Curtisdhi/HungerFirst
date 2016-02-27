@@ -120,6 +120,23 @@ class CustomerController extends Controller
         ));
     }
     
+    public function removeAction(Request $request, $id) {
+        $securityContext = $this->container->get('security.context');
+        $isAdmin = $securityContext->isGranted('ROLE_ADMIN');
+        
+        $em = $this->getDoctrine()->getManager();
+        $customer = $em->find("HFBundle:Customer", $id);
+        if (!$customer) {
+            throw $this->createNotFoundException('This customer doesn\'t exist');
+        }
+        
+        $em->remove($customer);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('success', 'Successfully removed customer');
+        
+        return $this->redirectToRoute('hf_index');    
+    }
+    
     public function listAction(Request $request, $query) {
         $em = $this->getDoctrine()->getManager();
         $maxCustomersOnPage = 20;
